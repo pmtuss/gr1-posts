@@ -1,0 +1,36 @@
+<div class="w-full">
+  <% if notice.present? %>
+    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
+  <% end %>
+
+  <div class="flex justify-between items-center">
+    <h1 class="font-bold text-4xl">Posts</h1>
+    <%= link_to 'New post', new_post_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
+  </div>
+
+  <div id="posts" class="min-w-full">
+    <div class="grid grid-cols-1 gap-4">
+      <% @posts.each do |post| %>
+        <div class="flex py-4 flex-col-reverse sm:flex-row">
+          <div class="w-full sm:w-64 sm:h-40">
+            <a href="<%= url_for(post) %>">
+              <%= image_tag post.image, class: "w-full h-full object-cover"%>
+            </a>
+          </div>
+
+          <div class="sm:ml-5 flex-1 sm:w-1/2">
+            <div class="font-bold hover:text-gray-600 mb-5">
+              <a href="<%= url_for(post) %>">
+                <%= post.title%>
+              </a>
+            </div>
+
+            <div class="hidden sm:block">
+              <%= post.preview %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
