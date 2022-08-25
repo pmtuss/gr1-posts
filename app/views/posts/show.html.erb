@@ -1,15 +1,38 @@
-<div class="mx-auto md:w-2/3 w-full flex">
+<div class="mx-auto md:w-2/3 w-full flex pb-32">
   <div class="mx-auto">
     <% if notice.present? %>
       <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
     <% end %>
 
+    <%= link_to 'Edit this post', edit_post_path(@post), class: "mt-2 rounded-lg py-3 px-5 bg-blue-600 hover:bg-blue-700 text-white inline-block font-medium" %>
+    <div class="inline-block ml-2">
+      <%= button_to 'Destroy this post', post_path(@post), method: :delete, class: "mt-2 rounded-lg py-3 px-5 bg-red-600 hover:bg-red-700 text-white font-medium" %>
+    </div>
+    <%= link_to 'Back to posts', posts_path, class: "ml-2 rounded-lg py-3 px-5 bg-gray-200 inline-block font-medium" %>
+
     <%= render @post %>
 
-    <%= link_to 'Edit this post', edit_post_path(@post), class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-    <div class="inline-block ml-2">
-      <%= button_to 'Destroy this post', post_path(@post), method: :delete, class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 font-medium" %>
+    <div>
+      <p class="text-2xl  font-semibold">Comment</p>
+      <%= form_with(model: @comment, local: true  , class: "flex justify-between") do |form|%>
+        <div class= "flex-1">
+          <%= form.text_area :body, class: "w-full form-control rounded" %>
+          <%= form.hidden_field :post_id, :value => @post.id %>
+        </div>
+        <div class="actions ml-5">
+          <%= form.submit "Save", class: "mt-2 rounded-lg py-3 px-5 bg-blue-600 hover:bg-blue-700 text-white inline-block font-mediu"%>
+        </div>
+      <% end %>
     </div>
-    <%= link_to 'Back to posts', posts_path, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+
+    <ul>
+      <% @post.comments.each do |comment|%>
+        <li class="flex flex-col border border-gray-300 rounded px-5 py-2 mb-3">
+          <span class="font-semibold"><%= comment.user.email%></span>
+          
+          <%= comment.body%>
+        </li>
+      <% end %>
+    </ul>
   </div>
 </div>
